@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import GeoMeasureMent
+
+admin.site.register(GeoMeasureMent)
