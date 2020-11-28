@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from .models import GeoMeasureMent
 from .forms import MeasurementModelForm
 from geopy.geocoders import Nominatim
-from .utils import get_geo_ip
+from .utils import get_geo_ip,get_center_coordinates,get_proper_distance
 from geopy.distance import geodesic
 import folium
 
@@ -20,7 +20,7 @@ def calculate_distance_view(request):
     point_a = (l_lat,l_lon)
 
     # initial folium map
-    map_folium = folium.Map(width=800,height=500,location=point_a)
+    map_folium = folium.Map(width=800,height=500,location=get_center_coordinates(l_lat,l_lon))
     # add folium marker in map (location)
     folium.Marker([l_lat,l_lon],tooltip='Click here for more',popup=city['city'],
                         icon=folium.Icon(color='red')).add_to(map_folium)
@@ -41,7 +41,9 @@ def calculate_distance_view(request):
         distance = round(geodesic(point_a,point_b).km,2)
         
         # folium map modification
-        map_folium = folium.Map(width=800,height=500,location=point_a)
+        map_folium = folium.Map(width=800,height=500,
+                            location=get_center_coordinates(l_lat,l_lon,des_lat,des_lon),
+                            zoom_start=get_proper_distance(distance))
         # add folium marker in map (location)
         folium.Marker([l_lat,l_lon],tooltip='Click here for more',popup=city['city'],
                         icon=folium.Icon(color='red')).add_to(map_folium)

@@ -10,5 +10,14 @@ def get_geo_ip(ip):
 def get_center_coordinates(latA,lonA,latB=None,lonB=None):
     cord = (latA,lonA)
     if latB:
-        cord = [(latA+latB)/2,(latA+latB)/2]
+        cord = [(latA+latB)/2,(lonA+lonB)/2]
     return cord
+
+def get_proper_distance(distance):
+    if distance <=100:
+        return 8
+    elif distance > 100 and distance < 5000:
+        return 4 
+    else:
+        return 2
+        
