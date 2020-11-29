@@ -1,4 +1,12 @@
 from django.contrib.gis.geoip2 import GeoIP2
+from requests import get
+
+
+def get_ip_address():
+    ipify_api = 'https://api.ipify.org'
+    ip = get(ipify_api).text
+    return ip
+
 
 def get_geo_ip(ip):
     geo_ip = GeoIP2()

@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from .models import GeoMeasureMent
 from .forms import MeasurementModelForm
 from geopy.geocoders import Nominatim
-from .utils import get_geo_ip,get_center_coordinates,get_proper_distance
+from .utils import get_geo_ip,get_center_coordinates,get_proper_distance,get_ip_address
 from geopy.distance import geodesic
 import folium
 
@@ -12,7 +12,7 @@ def calculate_distance_view(request):
     obj = get_object_or_404(GeoMeasureMent,id=1)
     form = MeasurementModelForm(request.POST or None)
     geo_locator = Nominatim(user_agent='geo_measurements')
-    ip_addr = '43.224.108.173'
+    ip_addr = get_ip_address()
     country,city,lat,lon = get_geo_ip(ip_addr)
     location = geo_locator.geocode(city)
     
