@@ -7,7 +7,9 @@ from geopy.distance import geodesic
 import folium
 
 def calculate_distance_view(request):
-    obj = get_object_or_404(GeoMeasureMent,id=7)
+    distance = None
+    destination = None
+    obj = get_object_or_404(GeoMeasureMent,id=1)
     form = MeasurementModelForm(request.POST or None)
     geo_locator = Nominatim(user_agent='geo_measurements')
     ip_addr = '43.224.108.173'
@@ -51,7 +53,9 @@ def calculate_distance_view(request):
         folium.Marker([des_lat,des_lon],tooltip='Click here for more',popup=destination,
                         icon=folium.Icon(color='blue',icon='cloud')).add_to(map_folium)
 
-
+        # draw the line beetween location and destination
+        line = folium.PolyLine(locations=[point_a,point_b],weight=2,color='red')
+        map_folium.add_child(line)
 
         instance.location = location
         instance.distance = distance
@@ -59,8 +63,9 @@ def calculate_distance_view(request):
     map_folium = map_folium._repr_html_()
 
     context = {
-        'distance':obj,
+        'distance':distance,
         'form' : form,
+        'destination': destination,
         'map' : map_folium,
     }
     return render(request,'geo_measurement/main.html',context)
