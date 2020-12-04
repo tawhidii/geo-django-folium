@@ -15,4 +15,6 @@ $ cd geo-django-folium
 $ pip install -r requirements.txt
 ```
 
+## Screenshot
 
+![image](https://github.com/tawhidii/geo-django-folium/blob/master/screenshot/one.png)
