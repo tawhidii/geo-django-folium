@@ -1,7 +1,7 @@
 # Geo Django 
 
 
-A web application for calculate distance bewteen to cities built with Django(A python web framework) and folium. 
+A web application for calculate distance bewteen two cities built with Django(A python web framework) and folium. 
 
 
 
